@@ -26,6 +26,7 @@ class PlayerViewController: UIViewController,UICollectionViewDataSource,UICollec
     }
     
     @IBAction func share(_ sender: ShareButton) {
+        Exporter.cleanup()
         Exporter.export(player.composer.composition)
         let url = Exporter.videoURL!
         let items:[Any] = [url]
@@ -70,17 +71,16 @@ class PlayerViewController: UIViewController,UICollectionViewDataSource,UICollec
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         player.applyFilterAt(indexPath.row)
-        previewImageView.isHidden = true
-//        filtersCollectionView.visibleCells.forEach {
-//            if let filterCell = $0 as? FilterCollectionViewCell {
-//                filterCell.active = false
-//                if let index = filtersCollectionView.indexPath(for: $0) {
-//                    if index == indexPath {
-//                        filterCell.active = true
-//                    }
-//                }
-//            }
-//        }
+        filtersCollectionView.visibleCells.forEach {
+            if let filterCell = $0 as? FilterCollectionViewCell {
+                filterCell.active = false
+                if let index = filtersCollectionView.indexPath(for: $0) {
+                    if index == indexPath {
+                        filterCell.active = true
+                    }
+                }
+            }
+        }
     }
 
     

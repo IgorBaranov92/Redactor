@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7853203D25FF809B00DB0C7A /* ImageCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7853203C25FF809B00DB0C7A /* ImageCapture.swift */; };
 		78A10E8925F8B53500DD08F6 /* AddMediaButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A10E8825F8B53500DD08F6 /* AddMediaButton.swift */; };
 		78A10E9125F8B80900DD08F6 /* ShareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A10E9025F8B80900DD08F6 /* ShareButton.swift */; };
 		78A10E9425F8BA1700DD08F6 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A10E9325F8BA1700DD08F6 /* PlayerViewController.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7853203C25FF809B00DB0C7A /* ImageCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCapture.swift; sourceTree = "<group>"; };
 		78A10E8825F8B53500DD08F6 /* AddMediaButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMediaButton.swift; sourceTree = "<group>"; };
 		78A10E9025F8B80900DD08F6 /* ShareButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareButton.swift; sourceTree = "<group>"; };
 		78A10E9325F8BA1700DD08F6 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 				78A10E9925F8DA7800DD08F6 /* Composer.swift */,
 				78A10EA225F8DBEC00DD08F6 /* Filters.swift */,
 				78A10EAC25FB5AEF00DD08F6 /* Exporter.swift */,
+				7853203C25FF809B00DB0C7A /* ImageCapture.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -165,6 +168,8 @@
 			dependencies = (
 			);
 			name = Redactor;
+			packageProductDependencies = (
+			);
 			productName = Redactor;
 			productReference = 78CD064925F8B0BB003108FA /* Redactor.app */;
 			productType = "com.apple.product-type.application";
@@ -192,6 +197,8 @@
 				Base,
 			);
 			mainGroup = 78CD064025F8B0BB003108FA;
+			packageReferences = (
+			);
 			productRefGroup = 78CD064A25F8B0BB003108FA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -269,6 +276,7 @@
 				78CD064D25F8B0BB003108FA /* AppDelegate.swift in Sources */,
 				78A10E9725F8DA7300DD08F6 /* Player.swift in Sources */,
 				78A10E8925F8B53500DD08F6 /* AddMediaButton.swift in Sources */,
+				7853203D25FF809B00DB0C7A /* ImageCapture.swift in Sources */,
 				78A10EA325F8DBEC00DD08F6 /* Filters.swift in Sources */,
 				78A10E9A25F8DA7800DD08F6 /* Composer.swift in Sources */,
 				78A10E9D25F8DAB600DD08F6 /* FilterCollectionViewCell.swift in Sources */,
@@ -348,7 +356,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -403,7 +411,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

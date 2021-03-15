@@ -5,7 +5,7 @@ class Exporter {
     
     static func export(_ asset:AVAsset,completion: ( () -> () )? = nil ) {
         
-      //  DispatchQueue.global(qos: .userInitiated).async {
+//        DispatchQueue.global(qos: .userInitiated).async {
             
             guard let videoURL = videoURL else { fatalError() }
             try? FileManager.default.removeItem(at: videoURL)
@@ -16,14 +16,14 @@ class Exporter {
                 exporter.exportAsynchronously { completion?() }
             }
             
-    //    }
+//        }
         
     }
 
     static var videoURL: URL? {
         FileManager.default
                 .urls(for: .documentDirectory, in:
-                .userDomainMask).first?.appendingPathComponent("newVideo")
+                .userDomainMask).first?.appendingPathComponent("newVideo.mp4")
     }
     
     static func cleanup() {

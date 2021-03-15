@@ -13,7 +13,7 @@ class Player {
     private(set) var composer = Composer()
     
     private var gpuImageView = GPUImageView()
-    private var gpuImageMovie: GPUImageMovie!
+    private(set) var gpuImageMovie: GPUImageMovie!
     
     func setupPlayerIn(_ view: UIView) {
         let playerLayer = AVPlayerLayer(player: player)
@@ -21,8 +21,8 @@ class Player {
         playerLayer.frame = view.bounds
         view.layer.addSublayer(playerLayer)
         
-//        gpuImageView.frame = view.bounds
-//        view.addSubview(gpuImageView)
+        gpuImageView.frame = view.bounds
+        view.addSubview(gpuImageView)
     }
     
     
@@ -36,30 +36,29 @@ class Player {
         hasVideo = true
         composer.add(AVAsset(url: url))
         playVideoIfPossible()
-        let asset = AVAsset(url: url)
-        let imageGen = AVAssetImageGenerator(asset: asset)
-        let image = try? UIImage(cgImage: imageGen.copyCGImage(at: CMTime(seconds: 0, preferredTimescale: 1), actualTime: nil))
-
-        completion?(image)
+        completion?(ImageCapture.captureFrom(url))
     }
     
     func applyFilterAt(_ index:Int) {
-//        Exporter.cleanup()
-//        Exporter.export(composer.composition)
+        Exporter.cleanup()
+        Exporter.export(composer.composition)
+        
         hasFilter = true
-//
-//        gpuImageMovie = GPUImageMovie(url: Exporter.videoURL!)
-//        let playerItem = AVPlayerItem(asset: composer.composition)
-//        gpuImageMovie.playerItem = playerItem
-//        let filter = GPUImageGammaFilter()
-//        filter.gamma = 1.7
-//        gpuImageMovie.addTarget(filter)
-//        gpuImageMovie.playAtActualSpeed = true
-//        filter.addTarget(gpuImageView)
-//        gpuImageMovie.startProcessing()
-//
 
-        playVideoIfPossible()
+        gpuImageMovie = GPUImageMovie(asset: composer.composition)
+        let playerItem = AVPlayerItem(asset: composer.composition)
+        player.replaceCurrentItem(with: playerItem)
+
+        gpuImageMovie.playerItem = playerItem
+        let filter = Filters.all[index]
+
+        gpuImageMovie.addTarget(filter)
+        filter.addTarget(gpuImageView)
+        
+        gpuImageMovie.playAtActualSpeed = true
+        gpuImageMovie.startProcessing()
+        player.play()
+
     }
     
     private func playVideoIfPossible() {
