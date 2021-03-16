@@ -78,30 +78,21 @@ class Filters {
     }()
     
     static func handle(_ image:UIImage,at index:Int,completion:@escaping ((UIImage) -> Void)) {
+            
+        guard let picture = GPUImagePicture(image: image) else { fatalError() }
+        let filter = all[index]
+        picture.addTarget(filter)
         
-        DispatchQueue.global(qos: .userInitiated).async {
-            
-            guard let picture = GPUImagePicture(image: image) else { fatalError() }
-            let filter = all[index]
-            picture.addTarget(filter)
-            
-                DispatchQueue.main.async {
-                switch index {
-                    case 0: completion(filter.image(byFilteringImage: image))
-                    case 1:
-                        filter.useNextFrameForImageCapture()
-                        picture.processImage()
-                        completion(filter.imageFromCurrentFramebuffer())
-                    case 2: completion(filter.image(byFilteringImage: image))
-                    case 3:
-                        filter.useNextFrameForImageCapture()
-                        picture.processImage()
-                        completion(filter.imageFromCurrentFramebuffer())
-                    default: completion(UIImage(named: "Template")!)
-                }
-            }
-            
+        switch index {
+            case 0, 2: completion(filter.image(byFilteringImage: image))
+            case 1, 3:
+                filter.useNextFrameForImageCapture()
+                picture.processImage()
+                completion(filter.imageFromCurrentFramebuffer())
+            default: completion(UIImage(named: "Template")!)
         }
+            
+        
    }
    
     

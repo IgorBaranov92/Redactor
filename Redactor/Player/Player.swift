@@ -2,20 +2,22 @@ import Foundation
 import AVFoundation
 import UIKit
 import GPUImage
-import AssetsLibrary
+
 
 class Player {
     
     private var hasMusic = false
     private(set) var hasVideo = false
     private var hasFilter = false
-    var isPlaying: Bool { hasMusic && hasVideo && hasFilter }
+    var isPlaying: Bool { hasMusic && hasVideo && hasFilter && player.rate != 0 }
+    
     private var player = AVPlayer()
     private(set) var composer = Composer()
     
     private var gpuImageView = GPUImageView()
-    private(set) var gpuImageMovie: GPUImageMovie!
-    
+    private var gpuImageMovie: GPUImageMovie!
+    private var filter = Filters.all[0]
+
     
     func setupPlayerIn(_ view: UIView) {
         let playerLayer = AVPlayerLayer(player: player)
@@ -41,6 +43,7 @@ class Player {
         completion?(ImageCapture.captureFrom(url))
     }
     
+    
     func applyFilterAt(_ index:Int) {
         hasFilter = true
 
@@ -50,9 +53,8 @@ class Player {
 
         gpuImageMovie.playerItem = playerItem
         
-        let filter = Filters.all[index]
+        filter = Filters.all[index]
         
-        gpuImageMovie.asset = composer.composition
         gpuImageMovie.addTarget(filter)
         gpuImageMovie.playAtActualSpeed = false
         filter.addTarget(gpuImageView)

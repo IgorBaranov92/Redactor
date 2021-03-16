@@ -1,6 +1,6 @@
-import Foundation
 import UIKit
 import AVFoundation
+
 class ImageCapture {
     
     static func captureFrom(_ url:URL) -> UIImage? {
