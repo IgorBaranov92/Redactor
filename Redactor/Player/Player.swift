@@ -2,18 +2,20 @@ import Foundation
 import AVFoundation
 import UIKit
 import GPUImage
+import AssetsLibrary
 
 class Player {
     
     private var hasMusic = false
     private(set) var hasVideo = false
     private var hasFilter = false
-    
+    var isPlaying: Bool { hasMusic && hasVideo && hasFilter }
     private var player = AVPlayer()
     private(set) var composer = Composer()
     
     private var gpuImageView = GPUImageView()
     private(set) var gpuImageMovie: GPUImageMovie!
+    
     
     func setupPlayerIn(_ view: UIView) {
         let playerLayer = AVPlayerLayer(player: player)
@@ -40,31 +42,27 @@ class Player {
     }
     
     func applyFilterAt(_ index:Int) {
-        Exporter.cleanup()
-        Exporter.export(composer.composition)
-        
         hasFilter = true
 
-        gpuImageMovie = GPUImageMovie(asset: composer.composition)
+        gpuImageMovie = GPUImageMovie(url: Exporter.videoURL!)
         let playerItem = AVPlayerItem(asset: composer.composition)
         player.replaceCurrentItem(with: playerItem)
 
         gpuImageMovie.playerItem = playerItem
-        let filter = Filters.all[index]
-
-        gpuImageMovie.addTarget(filter)
-        filter.addTarget(gpuImageView)
         
-        gpuImageMovie.playAtActualSpeed = true
+        let filter = Filters.all[index]
+        
+        gpuImageMovie.asset = composer.composition
+        gpuImageMovie.addTarget(filter)
+        gpuImageMovie.playAtActualSpeed = false
+        filter.addTarget(gpuImageView)
         gpuImageMovie.startProcessing()
-        player.play()
 
+        playVideoIfPossible()
     }
     
     private func playVideoIfPossible() {
         if hasMusic && hasVideo && hasFilter {
-            let playerItem = AVPlayerItem(asset: composer.composition)
-            player.replaceCurrentItem(with: playerItem)
             player.play()
         }
     }
@@ -72,3 +70,21 @@ class Player {
     
 }
 
+
+/*
+ private var writer: GPUImageMovieWriter!
+ writer = GPUImageMovieWriter(movieURL: Exporter.videoURL!, size: CGSize(width: 640, height: 480))
+
+ filter.addTarget(writer)
+  gpuImageMovie.runBenchmark = true
+
+ writer!.shouldPassthroughAudio = true
+ gpuImageMovie.audioEncodingTarget = writer
+ gpuImageMovie.enableSynchronizedEncoding(using: writer)
+ writer!.startRecording()
+ writer.completionBlock = { [unowned writer,weak self] in
+     filter.removeTarget(writer!)
+     writer!.finishRecording()
+     self?.gpuImageMovie.cancelProcessing()
+ }
+ */

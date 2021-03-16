@@ -6,6 +6,7 @@ import GPUImage
 //любой из группы Visual effects
 //комбинация любых двух из группы Visual effects
 
+
 class Filters {
     
     static private let filterNames = ["Яркость","Контраст","Размытие","Сетка"]
@@ -51,7 +52,7 @@ class Filters {
         
         //3
         let f5 = GPUImagePixellateFilter()
-        f5.fractionalWidthOfAPixel = 0.01
+        f5.fractionalWidthOfAPixel = 0.02
         let g3 = GPUImageFilterGroup()
         g3.addFilter(f5)
         g3.initialFilters = [f5]
@@ -79,50 +80,23 @@ class Filters {
     static func handle(_ image:UIImage,at index:Int,completion:@escaping ((UIImage) -> Void)) {
         
         DispatchQueue.global(qos: .userInitiated).async {
-            //1
-            let f1 = all[index]
             
             guard let picture = GPUImagePicture(image: image) else { fatalError() }
-            //2
-            let f1 = GPUImageGammaFilter()
-            f1.gamma = 1.5
-
-            let f2 = GPUImageEmbossFilter()
-            f2.intensity = 1.2
-
-            let f3 = GPUImageSaturationFilter()
-            f3.saturation = 1
-            
-            picture.addTarget(f1)
-            f1.addTarget(f2)
-            f2.addTarget(f3)
-            
-            //3
-            let pixelFilter = GPUImagePixellateFilter()
-            pixelFilter.fractionalWidthOfAPixel = 0.04
-            
-            //4
-            let f4 = GPUImagePolkaDotFilter()
-            f4.fractionalWidthOfAPixel = 0.01
-            
-            let f5 = GPUImageHalftoneFilter()
-            f5.fractionalWidthOfAPixel = 0.01
-            
-            picture.addTarget(f4)
-            f4.addTarget(f5)
+            let filter = all[index]
+            picture.addTarget(filter)
             
                 DispatchQueue.main.async {
                 switch index {
-                    case 0: completion(exposureFilter.image(byFilteringImage: image))
+                    case 0: completion(filter.image(byFilteringImage: image))
                     case 1:
-                        f3.useNextFrameForImageCapture()
+                        filter.useNextFrameForImageCapture()
                         picture.processImage()
-                        completion(f3.imageFromCurrentFramebuffer())
-                    case 2: completion(pixelFilter.image(byFilteringImage: image))
+                        completion(filter.imageFromCurrentFramebuffer())
+                    case 2: completion(filter.image(byFilteringImage: image))
                     case 3:
-                        f5.useNextFrameForImageCapture()
+                        filter.useNextFrameForImageCapture()
                         picture.processImage()
-                        completion(f5.imageFromCurrentFramebuffer())
+                        completion(filter.imageFromCurrentFramebuffer())
                     default: completion(UIImage(named: "Template")!)
                 }
             }

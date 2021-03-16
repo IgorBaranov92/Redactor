@@ -5,7 +5,7 @@ import LinkPresentation
 
 class PlayerViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
     
-    @IBOutlet weak var shareButton: ShareButton!// { didSet { shareButton.isHidden = true }}
+    @IBOutlet weak var shareButton: ShareButton! { didSet { shareButton.isHidden = true }}
     @IBOutlet weak var addVideoButton: AddMediaButton!
     @IBOutlet weak var filtersCollectionView: UICollectionView!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
@@ -26,31 +26,33 @@ class PlayerViewController: UIViewController,UICollectionViewDataSource,UICollec
     }
     
     @IBAction func share(_ sender: ShareButton) {
-        Exporter.cleanup()
         Exporter.export(player.composer.composition)
         let url = Exporter.videoURL!
         let items:[Any] = [url]
-        
         let activityVC = UIActivityViewController(activityItems: items , applicationActivities: nil)
-        
+        activityVC.popoverPresentationController?.sourceView = sender
         present(activityVC, animated: true)
     }
     
     @IBAction func addMusic(_ sender: AddMediaButton) {
-        let picker = MPMediaPickerController(mediaTypes: .music)
-        picker.delegate = self
-        picker.allowsPickingMultipleItems = false
-        picker.showsCloudItems = false
-        present(picker, animated: true)
+        if !player.isPlaying {
+            let picker = MPMediaPickerController(mediaTypes: .music)
+            picker.delegate = self
+            picker.allowsPickingMultipleItems = false
+            picker.showsCloudItems = false
+            present(picker, animated: true)
+        } else { ErrorAlert.show(in: self) }
     }
 
     @IBAction func addVideo(_ sender: AddMediaButton) {
-        let imagePC = UIImagePickerController()
-        imagePC.delegate = self
-        imagePC.sourceType = .savedPhotosAlbum
-        imagePC.mediaTypes = ["public.movie"]
+        if !player.isPlaying {
+            let imagePC = UIImagePickerController()
+            imagePC.delegate = self
+            imagePC.sourceType = .savedPhotosAlbum
+            imagePC.mediaTypes = ["public.movie"]
+            present(imagePC, animated: true)
+        } else { ErrorAlert.show(in: self) }
 
-        present(imagePC, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -118,9 +120,9 @@ extension PlayerViewController: UIImagePickerControllerDelegate, UINavigationCon
         if let mediaURL = info[.mediaURL] as? URL {
             playerLabel.isHidden = true
             shareButton.isHidden = false
-            player.addVideoAt(mediaURL) {
-                self.previewImageView.isHidden = false
-                self.previewImageView.image = $0
+            player.addVideoAt(mediaURL) { [unowned self] in
+                previewImageView.isHidden = false
+                previewImageView.image = $0
             }
         }
         picker.dismiss(animated: true)

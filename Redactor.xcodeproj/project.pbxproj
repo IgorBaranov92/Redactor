@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7853203D25FF809B00DB0C7A /* ImageCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7853203C25FF809B00DB0C7A /* ImageCapture.swift */; };
+		7853205B2600D7C400DB0C7A /* ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7853205A2600D7C400DB0C7A /* ErrorAlert.swift */; };
 		78A10E8925F8B53500DD08F6 /* AddMediaButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A10E8825F8B53500DD08F6 /* AddMediaButton.swift */; };
 		78A10E9125F8B80900DD08F6 /* ShareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A10E9025F8B80900DD08F6 /* ShareButton.swift */; };
 		78A10E9425F8BA1700DD08F6 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A10E9325F8BA1700DD08F6 /* PlayerViewController.swift */; };
@@ -27,6 +28,7 @@
 
 /* Begin PBXFileReference section */
 		7853203C25FF809B00DB0C7A /* ImageCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCapture.swift; sourceTree = "<group>"; };
+		7853205A2600D7C400DB0C7A /* ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlert.swift; sourceTree = "<group>"; };
 		78A10E8825F8B53500DD08F6 /* AddMediaButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMediaButton.swift; sourceTree = "<group>"; };
 		78A10E9025F8B80900DD08F6 /* ShareButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareButton.swift; sourceTree = "<group>"; };
 		78A10E9325F8BA1700DD08F6 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
@@ -89,7 +91,7 @@
 			path = Misc;
 			sourceTree = "<group>";
 		};
-		78A10E8425F8B4D900DD08F6 /* Model */ = {
+		78A10E8425F8B4D900DD08F6 /* Player */ = {
 			isa = PBXGroup;
 			children = (
 				78A10E9625F8DA7300DD08F6 /* Player.swift */,
@@ -98,7 +100,7 @@
 				78A10EAC25FB5AEF00DD08F6 /* Exporter.swift */,
 				7853203C25FF809B00DB0C7A /* ImageCapture.swift */,
 			);
-			path = Model;
+			path = Player;
 			sourceTree = "<group>";
 		};
 		78A10E8525F8B4DD00DD08F6 /* View */ = {
@@ -108,6 +110,7 @@
 				78A10E9025F8B80900DD08F6 /* ShareButton.swift */,
 				78A10E9C25F8DAB600DD08F6 /* FilterCollectionViewCell.swift */,
 				78A10E9F25F8DB6F00DD08F6 /* CheckmarkView.swift */,
+				7853205A2600D7C400DB0C7A /* ErrorAlert.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -142,7 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				78CD065225F8B0BB003108FA /* Main.storyboard */,
-				78A10E8425F8B4D900DD08F6 /* Model */,
+				78A10E8425F8B4D900DD08F6 /* Player */,
 				78A10E8525F8B4DD00DD08F6 /* View */,
 				78A10E8625F8B4E100DD08F6 /* Controller */,
 				78A10E8125F8B4BF00DD08F6 /* Misc */,
@@ -271,6 +274,7 @@
 				78A10EAD25FB5AEF00DD08F6 /* Exporter.swift in Sources */,
 				78A10E9125F8B80900DD08F6 /* ShareButton.swift in Sources */,
 				78A10EAA25F915E600DD08F6 /* AVMutCom+Extensions.swift in Sources */,
+				7853205B2600D7C400DB0C7A /* ErrorAlert.swift in Sources */,
 				78A10E9425F8BA1700DD08F6 /* PlayerViewController.swift in Sources */,
 				78A10EA025F8DB6F00DD08F6 /* CheckmarkView.swift in Sources */,
 				78CD064D25F8B0BB003108FA /* AppDelegate.swift in Sources */,
