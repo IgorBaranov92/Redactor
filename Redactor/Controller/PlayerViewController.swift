@@ -9,12 +9,14 @@ class PlayerViewController: UIViewController,UICollectionViewDataSource,UICollec
     @IBOutlet weak var addVideoButton: AddMediaButton!
     @IBOutlet weak var filtersCollectionView: UICollectionView!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var playerView: UIView!
+    @IBOutlet weak var playerView: UIView! { didSet {
+        playerView.contentMode = .redraw
+    }}
     @IBOutlet weak var playerLabel: UILabel!
     
     @IBOutlet weak var previewImageView: UIImageView! { didSet {
         previewImageView.isHidden = true
-        previewImageView.contentMode = .scaleAspectFill
+        previewImageView.contentMode = .redraw
     }}
     
     

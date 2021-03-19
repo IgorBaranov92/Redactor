@@ -1,6 +1,5 @@
 import Foundation
 import AVFoundation
-import UIKit
 import GPUImage
 
 
@@ -12,6 +11,7 @@ class Player {
     var isPlaying: Bool { hasMusic && hasVideo && hasFilter && player.rate != 0 }
     
     private var player = AVPlayer()
+    private lazy var playerLayer = AVPlayerLayer(player: player)
     private(set) var composer = Composer()
     
     private var gpuImageView = GPUImageView()
@@ -20,9 +20,9 @@ class Player {
 
     
     func setupPlayerIn(_ view: UIView) {
-        let playerLayer = AVPlayerLayer(player: player)
-        playerLayer.videoGravity = .resizeAspectFill
+//        let playerLayer = AVPlayerLayer(player: player)
         playerLayer.frame = view.bounds
+        playerLayer.videoGravity = .resizeAspectFill
         view.layer.addSublayer(playerLayer)
         
         gpuImageView.frame = view.bounds
@@ -38,7 +38,7 @@ class Player {
     
     func addVideoAt(_ url:URL,_ completion: ( (UIImage?) -> Void )? = nil) {
         hasVideo = true
-        composer.add(AVAsset(url: url))
+        composer.addVideo(AVAsset(url: url))
         playVideoIfPossible()
         completion?(ImageCapture.captureFrom(url))
     }
@@ -59,7 +59,7 @@ class Player {
         gpuImageMovie.playAtActualSpeed = false
         filter.addTarget(gpuImageView)
         gpuImageMovie.startProcessing()
-
+        playerLayer.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
         playVideoIfPossible()
     }
     

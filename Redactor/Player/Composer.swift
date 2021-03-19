@@ -3,7 +3,7 @@ import AVFoundation
 
 class Composer {
     
-    private(set) var videos = [AVAsset]()
+    private var videos = [AVAsset]()
     private(set) var composition = AVMutableComposition()
     
     private lazy var videoTrack = composition.addVideoTrack()
@@ -11,21 +11,27 @@ class Composer {
     
     private var totalDuration: CMTime { videos.reduce(.zero) { $0 + $1.duration } }
 
-    func add(_ asset:AVAsset) {
+    private var audio: AVAsset? = nil
+    
+    func addVideo(_ asset:AVAsset) {
         
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            
             insertVideo(asset,
                         track: videoTrack!,
                         duration: asset.duration,
                         at: totalDuration)
-            
-            insertAudio(asset,
-                        track: audioTrack!,
-                        duration: asset.duration,
-                        at: totalDuration)
-            
             videos.append(asset)
+
+            if audio == nil {
+                insertAudio(asset,
+                            track: audioTrack!,
+                            duration: asset.duration,
+                            at: totalDuration)
+                } else {
+                    addAudio(self.audio!)
+            }
+            
+            
         }
         
     }
@@ -41,6 +47,7 @@ class Composer {
                         track: audioTrack,
                         duration: totalDuration,
                         at: .zero)
+            self.audio = asset
         }
         
     }
